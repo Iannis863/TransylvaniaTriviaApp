@@ -197,25 +197,26 @@ def show_leaderboard_reveal():
         name_color = "#CD7F32"
 
     st.markdown(f"""
-        <style>
-            .stButton>button[kind="secondary"]:nth-of-type(2) {{
-                width: 100%; height: 55vh; background-color: transparent !important;
-                border: none !important; color: transparent !important; z-index: 999; position: absolute;
-            }}
-            .reveal-container {{
-                background-color: #000000; padding: 50px 80px; border-radius: 20px; border: 8px solid #4a0000;
-                text-align: center; min-height: 55vh; display: flex; flex-direction: column; justify-content: center;
-                align-items: center; box-shadow: 0 0 40px #800000;
-            }}
-        </style>
-        <div class="reveal-container">
-            <h2 style="color: #666666; font-size: 30px; margin: 0; font-family: 'Chromium One', sans-serif;">LOCUL</h2>
-            <h1 style="color: #ffffff; font-size: 110px; margin: 0; line-height: 1; font-family: 'Chromium One', sans-serif;">{rank}</h1>
-            <div style="width: 250px; height: 3px; background-color: #800000; margin: 20px 0;"></div>
-            <h2 style="color: {name_color}; font-size: 80px; font-weight: bold; margin: 5px 0;">{current_team['Echipă']}</h2>
-            <h3 style="color: #ffffff; font-size: 50px; margin: 0;">{current_team['Total']:.2f}</h3>
-        </div>
-    """, unsafe_allow_html=True)
+            <style>
+                .stButton>button[kind="secondary"]:nth-of-type(2) {{
+                    width: 100%; height: 55vh; background-color: transparent !important;
+                    border: none !important; color: transparent !important; z-index: 999; position: absolute;
+                }}
+                .reveal-container {{
+                    background-color: #000000; padding: 50px 80px; border-radius: 20px; 
+                    border: 8px solid #00004a; /* <--- CHANGED TO DARK BLUE */
+                    text-align: center; min-height: 55vh; display: flex; flex-direction: column; justify-content: center;
+                    align-items: center; 
+                    box-shadow: 0 0 40px #000080; /* <--- CHANGED TO BLUE GLOW */
+                }}
+            </style>
+            <div class="reveal-container">
+                <h2 style="color: #666666; font-size: 30px; margin: 0; font-family: 'Chromium One', sans-serif;">LOCUL</h2>
+                <h1 style="color: #ffffff; font-size: 110px; margin: 0; line-height: 1; font-family: 'Chromium One', sans-serif;">{rank}</h1>
+                <div style="width: 250px; height: 3px; background-color: #000080; margin: 20px 0;"></div> <h2 style="color: {name_color}; font-size: 80px; font-weight: bold; margin: 5px 0;">{current_team['Echipă']}</h2>
+                <h3 style="color: #ffffff; font-size: 50px; margin: 0;">{current_team['Total']:.2f}</h3>
+            </div>
+        """, unsafe_allow_html=True)
     if st.button("Următorul Loc", key="screen_click_trigger"):
         st.session_state.reveal_step += 1
         st.rerun()
