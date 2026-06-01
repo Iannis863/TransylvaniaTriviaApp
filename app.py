@@ -61,18 +61,26 @@ def get_dynamic_font_size(text, is_qa=False):
 # --- 1. THE ADVANCED SCORING ENGINE ---
 def run_calculation(df):
     if df.empty: return df
-    numeric_cols = ['R1', 'R2', 'R3', 'R4', 'R5', 'Pariu (±)']
+    numeric_cols = ['R1', 'R2', 'R3', 'R4', 'R5', 'Joker Pct', 'Pariu (±)']
     for col in numeric_cols:
-        df[col] = pd.to_numeric(df[col], errors='coerce').fillna(0.00)
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors='coerce').fillna(0.00)
 
     def row_math(row):
         rounds = ["R1", "R2", "R3", "R4", "R5"]
         score_sum = 0.00
-        j_choice = str(row['Joker'])
+        j_choice = str(row.get('Joker', 'Niciuna'))
+        j_pct = float(row.get('Joker Pct', 0.00))
         for r in rounds:
             val = float(row[r])
-            score_sum += (val * 2) if j_choice == r else val
-        return score_sum + float(row['Pariu (±)'])
+            if j_choice == r:
+                if val >= j_pct:
+                    score_sum += val + j_pct
+                else:
+                    score_sum += val
+            else:
+                score_sum += val
+        return score_sum + float(row.get('Pariu (±)', 0.00))
 
     df['Total'] = df.apply(row_math, axis=1)
     return df
@@ -80,7 +88,7 @@ def run_calculation(df):
 
 def manage_scores():
     st.header("🏆 Trivia Scoring Matrix")
-    COLS = ['Echipă', 'R1', 'R2', 'R3', 'R4', 'R5', 'Joker', 'Pariu (±)', 'Total']
+    COLS = ['Echipă', 'R1', 'R2', 'R3', 'R4', 'R5', 'Joker', 'Joker Pct', 'Pariu (±)', 'Total']
     if 'teams' not in st.session_state:
         st.session_state.teams = pd.DataFrame(columns=COLS)
 
@@ -90,7 +98,7 @@ def manage_scores():
             if t_name:
                 new_t = pd.DataFrame(
                     [{'Echipă': t_name, 'R1': 0.00, 'R2': 0.00, 'R3': 0.00, 'R4': 0.00, 'R5': 0.00, 'Joker': "Niciuna",
-                      'Pariu (±)': 0.00, 'Total': 0.00}])
+                      'Joker Pct': 0.00, 'Pariu (±)': 0.00, 'Total': 0.00}])
                 st.session_state.teams = pd.concat([st.session_state.teams, new_t], ignore_index=True)
                 st.rerun()
 
@@ -243,8 +251,14 @@ def place_smart_scaled_image(slide, img_path, target_center_x, target_center_y, 
             if os.path.exists(base + ext): final_path = base + ext; break
     if not final_path: return
 
-    if os.path.splitext(final_path)[1].lower() in ['.webp', '.avif', '.mpo']:
+    PPTX_SUPPORTED = {'JPEG', 'PNG', 'BMP', 'GIF', 'TIFF', 'WMF'}
+    try:
         img = Image.open(final_path)
+        actual_format = img.format
+    except Exception:
+        img, actual_format = None, None
+
+    if img is not None and actual_format not in PPTX_SUPPORTED:
         img_io = io.BytesIO()
         img.save(img_io, format='PNG')
         img_io.seek(0)
