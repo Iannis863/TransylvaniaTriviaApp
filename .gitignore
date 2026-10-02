@@ -1,0 +1,15 @@
+.venv
+audio
+Grading Sheets
+images
+Past Slides
+Questions
+questions.csv
+Transylvania_Trivia.pptx
+ffmpeg
+.env
+gemini_api_key.txt
+.idea
+cache
+__pycache__/
+*.pyc
