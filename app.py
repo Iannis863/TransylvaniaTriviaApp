@@ -459,15 +459,17 @@ def generate_trivia_slides(df):
                                                      max_w=Inches(5.0), max_h=Inches(5.0))
 
             else:
-                # Standard Logic for R1, R4, R5
+                # Standard Logic for R1, R4, R5 Question Slides
                 if has_pic:
-                    add_styled_text(slide, row['Question'], Inches(0.5), Inches(1.5), Inches(6), Inches(5), bold=True,
-                                    is_qa=True, font_name="Gladiola", force_single_line=False)
+                    # Shape: Question and Picture
+                    add_styled_text(slide, row['Question'], Pt(67.71), Pt(101.14), Pt(436.29), Pt(272.57),
+                                    bold=True, is_qa=True, font_name="Gladiola", force_single_line=False)
                     place_smart_scaled_image(slide, path, Inches(10), prs.slide_height / 2 + Inches(0.5),
                                              max_w=Inches(5.0), max_h=Inches(4.5))
                 else:
-                    add_styled_text(slide, row['Question'], Inches(5.5), Inches(1.5), Inches(6.5), Inches(5.0), bold=True,
-                                    is_qa=True, font_name="Gladiola", force_single_line=False)
+                    # Shape: Question
+                    add_styled_text(slide, row['Question'], Pt(390), Pt(64.29), Pt(492), Pt(324),
+                                    bold=True, is_qa=True, font_name="Gladiola", force_single_line=False)
 
         ans_img = os.path.join("images", "Slides", "Round Slides", f"Round {r} Answers.jpeg")
         if os.path.exists(ans_img):
@@ -612,23 +614,29 @@ def generate_trivia_slides(df):
                         place_smart_scaled_image(slide, img_path_b, prs.slide_width * 0.75,
                                                  prs.slide_height / 2 - Inches(0.5), max_w=Inches(6.0), max_h=Inches(4.5))
 
-                add_styled_text(slide, f"Răspuns: {row['Answer']}", 0, Inches(5.8), prs.slide_width, Inches(1.5),
+                add_styled_text(slide, f"Răspuns: {row['Answer']}", 0, Inches(6.2), prs.slide_width, Inches(1.0),
                                 font_size=54, bold=True, font_name="Gladiola", force_single_line=False)
 
             else:
                 # Standard Logic for R1, R4, R5 Answer Slides
                 if has_pic:
-                    add_styled_text(slide, row['Question'], Inches(0.5), Inches(1.5), Inches(6), Inches(2.4), is_qa=True,
-                                    font_name="Gladiola", force_single_line=False)
-                    add_styled_text(slide, f"Răspuns: {row['Answer']}", Inches(0.5), Inches(4.4), Inches(6), Inches(1.5),
-                                    font_size=44, bold=True, is_qa=True, font_name="Gladiola", force_single_line=False)
+                    # Shape: Answer and Picture Question & Answer and Picture Answer
+                    ans_text = f"Răspuns: {row['Answer']}"
+                    ans_font_size = 32 if len(ans_text) > 40 else (38 if len(ans_text) > 28 else 44)
+                    add_styled_text(slide, row['Question'], Pt(72.86), Pt(76.29), Pt(431.14), Pt(204.51),
+                                    is_qa=True, font_name="Gladiola", force_single_line=False)
+                    add_styled_text(slide, ans_text, Pt(72.86), Pt(330), Pt(418.89), Pt(73.71),
+                                    font_size=ans_font_size, bold=True, is_qa=True, font_name="Gladiola", force_single_line=False)
                     place_smart_scaled_image(slide, path, Inches(10), prs.slide_height / 2 + Inches(0.5),
                                              max_w=Inches(5.0), max_h=Inches(4.5))
                 else:
-                    add_styled_text(slide, row['Question'], Inches(5.5), Inches(1.5), Inches(6.5), Inches(2.4), is_qa=True,
-                                    font_name="Gladiola", force_single_line=False)
-                    add_styled_text(slide, f"Răspuns: {row['Answer']}", Inches(5.5), Inches(4.4), Inches(6.5), Inches(1.5),
-                                    font_size=44, bold=True, is_qa=True, font_name="Gladiola", force_single_line=False)
+                    # Shape: Answer Question & Answer Answer
+                    ans_text = f"Răspuns: {row['Answer']}"
+                    ans_font_size = 32 if len(ans_text) > 40 else (38 if len(ans_text) > 28 else 44)
+                    add_styled_text(slide, row['Question'], Pt(396), Pt(69.43), Pt(483.43), Pt(200.57),
+                                    is_qa=True, font_name="Gladiola", force_single_line=False)
+                    add_styled_text(slide, ans_text, Pt(402.86), Pt(330.86), Pt(468), Pt(93.94),
+                                    font_size=ans_font_size, bold=True, is_qa=True, font_name="Gladiola", force_single_line=False)
 
         if r in [3, 5]:
             break_filename = "15 Min Break Slide.jpeg" if r == 3 else "10 Min Break Slide.jpeg"
@@ -669,13 +677,13 @@ def generate_trivia_slides(df):
                 stem, opt_a, opt_b, opt_c, opt_d = m_opts.groups()
                 add_styled_text(sq, stem.strip(), Inches(1.3), Inches(2.0), Inches(10.7), Inches(2.1), font_size=34, bold=True,
                                 is_qa=True, font_name="Gladiola", force_single_line=False)
-                add_styled_text(sq, opt_a.strip(), Inches(1.8), Inches(4.7), Inches(4.5), Inches(0.8), font_size=32, bold=True,
+                add_styled_text(sq, opt_a.strip(), Inches(1.8), Inches(4.9), Inches(4.5), Inches(0.8), font_size=32, bold=True,
                                 alignment=PP_ALIGN.LEFT, font_name="Gladiola", force_single_line=False)
-                add_styled_text(sq, opt_b.strip(), Inches(8.0), Inches(4.7), Inches(4.5), Inches(0.8), font_size=32, bold=True,
+                add_styled_text(sq, opt_b.strip(), Inches(8.0), Inches(4.9), Inches(4.5), Inches(0.8), font_size=32, bold=True,
                                 alignment=PP_ALIGN.LEFT, font_name="Gladiola", force_single_line=False)
-                add_styled_text(sq, opt_c.strip(), Inches(1.8), Inches(6.1), Inches(4.5), Inches(0.8), font_size=32, bold=True,
+                add_styled_text(sq, opt_c.strip(), Inches(1.8), Inches(6.3), Inches(4.5), Inches(0.8), font_size=32, bold=True,
                                 alignment=PP_ALIGN.LEFT, font_name="Gladiola", force_single_line=False)
-                add_styled_text(sq, opt_d.strip(), Inches(8.0), Inches(6.1), Inches(4.5), Inches(0.8), font_size=32, bold=True,
+                add_styled_text(sq, opt_d.strip(), Inches(8.0), Inches(6.3), Inches(4.5), Inches(0.8), font_size=32, bold=True,
                                 alignment=PP_ALIGN.LEFT, font_name="Gladiola", force_single_line=False)
             else:
                 add_styled_text(sq, q_text, Inches(1.3), Inches(2.0), Inches(10.7), Inches(4.5), font_size=36, bold=True,
@@ -706,13 +714,13 @@ def generate_trivia_slides(df):
 
         if os.path.exists(w_a_bg):
             stem_text = stem.strip() if m_opts else q_text
-            add_styled_text(sa, stem_text, Inches(1.3), Inches(2.0), Inches(10.7), Inches(2.1), font_size=34, bold=True,
+            add_styled_text(sa, stem_text, Inches(1.3), Inches(2.35), Inches(10.7), Inches(2.1), font_size=34, bold=True,
                             is_qa=True, font_name="Gladiola", force_single_line=False)
             clean_ans = re.sub(rf'^{ans_letter}[\).:\s-]+', '', ans_raw, flags=re.IGNORECASE).strip()
             if not clean_ans:
                 clean_ans = ans_raw
             ans_font_size = 22 if len(clean_ans) > 70 else (28 if len(clean_ans) > 40 else 34)
-            add_styled_text(sa, clean_ans, Inches(3.4), Inches(5.2), Inches(7.4), Inches(1.0), font_size=ans_font_size,
+            add_styled_text(sa, clean_ans, Inches(3.4), Inches(5.5), Inches(7.4), Inches(1.0), font_size=ans_font_size,
                             bold=True, alignment=PP_ALIGN.LEFT, font_name="Gladiola", force_single_line=False)
         else:
             add_styled_text(sa, "Pariul: Răspuns", Inches(0.5), Inches(0.2), Inches(5), Inches(0.8), font_size=44,
