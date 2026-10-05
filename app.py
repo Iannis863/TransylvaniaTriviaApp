@@ -22,6 +22,7 @@ import pandas as pd
 from pptx import Presentation
 from pptx.util import Inches, Pt
 from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
+from pptx.enum.shapes import MSO_SHAPE
 from pptx.dml.color import RGBColor
 from PIL import Image
 from pydub import AudioSegment
@@ -324,8 +325,9 @@ def generate_trivia_slides(df):
     for r in sorted([r for r in df['Round'].unique() if r <= 5]):
         r_data = df[df['Round'] == r]
         base_name = r_data['Round_Name'].iloc[0]
-        r_img = os.path.join("images", "Slides", "Round Slides", f"Round {r}.jpeg")
-        if os.path.exists(r_img):
+        r_img_base = os.path.join("images", "Slides", "Round Slides", f"Round {r}")
+        r_img = next((r_img_base + ext for ext in ['.jpeg', '.jpg', '.png', '.webp', '.avif'] if os.path.exists(r_img_base + ext)), None)
+        if r_img:
             slide = prs.slides.add_slide(prs.slide_layouts[6])
             add_bg(slide, r_img)
         else:
@@ -471,8 +473,9 @@ def generate_trivia_slides(df):
                     add_styled_text(slide, row['Question'], Pt(390), Pt(64.29), Pt(492), Pt(324),
                                     bold=True, is_qa=True, font_name="Gladiola", force_single_line=False)
 
-        ans_img = os.path.join("images", "Slides", "Round Slides", f"Round {r} Answers.jpeg")
-        if os.path.exists(ans_img):
+        ans_img_base = os.path.join("images", "Slides", "Round Slides", f"Round {r} Answers")
+        ans_img = next((ans_img_base + ext for ext in ['.jpeg', '.jpg', '.png', '.webp', '.avif'] if os.path.exists(ans_img_base + ext)), None)
+        if ans_img:
             slide = prs.slides.add_slide(prs.slide_layouts[6])
             add_bg(slide, ans_img)
         else:
@@ -508,10 +511,16 @@ def generate_trivia_slides(df):
                 ans_bg = next((c for c in candidates_r2 if os.path.exists(c)), None)
                 add_bg(slide, ans_bg)
             elif r == 3:
-                r3_ans_bg = os.path.join("images", "Slides", "Round 3", "Answers", f"{i}.jpeg")
-                if not os.path.exists(r3_ans_bg):
-                    r3_ans_bg = os.path.join("images", "Slides", "Round 3", f"{i}.jpeg")
-                add_bg(slide, r3_ans_bg if os.path.exists(r3_ans_bg) else None)
+                candidates_r3_ans = [
+                    os.path.join("images", "Slides", "Round 3", "Answers", f"{i}.jpeg"),
+                    os.path.join("images", "Slides", "Round 3", "Answers", f"{i}.jpg"),
+                    os.path.join("images", "Slides", "Round 3", "Answers", f"{i}.png"),
+                    os.path.join("images", "Slides", "Round 3", f"{i}.jpeg"),
+                    os.path.join("images", "Slides", "Round 3", f"{i}.jpg"),
+                    os.path.join("images", "Slides", "Round 3", f"{i}.png")
+                ]
+                r3_ans_bg = next((c for c in candidates_r3_ans if os.path.exists(c)), None)
+                add_bg(slide, r3_ans_bg)
             elif r in [1, 4, 5]:
                 r145_dirs = [
                     os.path.join("images", "Slides", "Round 1, 4, 5"),
@@ -540,37 +549,60 @@ def generate_trivia_slides(df):
                 add_bg(slide)
 
             # ANSWER SLIDE LAYOUT LOGIC
-            # --- ADAPTIVE ROUND 3 ANSWER LAYOUT ---
+            # --- ROUND 3 PLAYLIST ANSWER LAYOUT ---
             if r == 3:
-                # Lyric Continuation on Left, Image on Right
-                if "Continuă Versul" in base_name:
-                    ans = str(row.get('Answer', ''))
-                    parts = ans.split("-", 1) if "-" in ans else ["", ans]
-                    lyric_a = parts[1].strip() if len(parts) > 1 else ans.strip()
-                    add_styled_text(slide, lyric_a, Inches(0.5), Inches(1.5), prs.slide_width / 2 - Inches(0.5),
-                                    Inches(5), bold=True, is_qa=True, font_name="Gladiola", force_single_line=False)
-                    if path:
-                        place_smart_scaled_image(slide, path, prs.slide_width * 0.75,
-                                                 prs.slide_height / 2 + Inches(0.4), max_w=Inches(5.5),
-                                                 max_h=Inches(5.0))
+                # Shape: Picture
+                # Left: 108 pt, Top: 112.29 pt, Width: 191.14 pt, Height: 179.14 pt
+                if path:
+                    try:
+                        box = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Pt(108), Pt(112.29), Pt(191.14), Pt(179.14))
+                        box.fill.solid()
+                        box.fill.fore_color.rgb = RGBColor(11, 2, 19)
+                        box.line.fill.background()
+                    except Exception:
+                        pass
+                    place_smart_scaled_image(slide, path, Pt(108 + 191.14 / 2), Pt(112.29 + 179.14 / 2),
+                                             max_w=Pt(191.14), max_h=Pt(179.14))
 
-                # Classic: 3-Zone Layout (Song - Image - Artist)
-                else:
-                    cw, vt = prs.slide_width / 3, (prs.slide_height - Inches(2.5)) / 2
-                    ans = str(row['Answer'])
-                    parts = ans.split("-", 1) if "-" in ans else [ans, ""]
-                    # Left Zone: Song Name
-                    add_styled_text(slide, parts[0].strip(), Inches(0.2), vt, cw - Inches(0.4), Inches(2.5),
-                                    font_size=48, bold=True, font_name="Gladiola", force_single_line=False)
-                    # Middle Zone: Image
-                    if path:
-                        place_smart_scaled_image(slide, path, prs.slide_width / 2, prs.slide_height / 2,
-                                                 max_w=cw, max_h=Inches(5))
-                    # Right Zone: Artist Name
-                    if len(parts) > 1:
-                        add_styled_text(slide, parts[1].strip(), prs.slide_width - cw + Inches(0.2), vt,
-                                        cw - Inches(0.4), Inches(2.5), font_size=48, bold=True, font_name="Gladiola",
-                                        force_single_line=False)
+                # Playlist Answer Boxes (Progressive Reveal)
+                r3_answer_coords = [
+                    (Pt(636), Pt(102), Pt(201.43), Pt(23.14)),     # Answer 1
+                    (Pt(636), Pt(142.29), Pt(201.43), Pt(23.14)),  # Answer 2
+                    (Pt(636), Pt(179.14), Pt(201.43), Pt(23.14)),  # Answer 3
+                    (Pt(636), Pt(215.57), Pt(201.43), Pt(23.14)),  # Answer 4
+                    (Pt(636), Pt(251.57), Pt(201.43), Pt(23.14)),  # Answer 5
+                    (Pt(636), Pt(288.43), Pt(201.43), Pt(23.14)),  # Answer 6
+                    (Pt(636), Pt(325.71), Pt(201.43), Pt(23.14)),  # Answer 7
+                    (Pt(636), Pt(361.71), Pt(201.43), Pt(23.14)),  # Answer 8
+                    (Pt(636), Pt(397.71), Pt(201.43), Pt(23.14)),  # Answer 9
+                    (Pt(636), Pt(433.71), Pt(201.43), Pt(23.14)),  # Answer 10
+                ]
+
+                for k in range(min(i, len(r3_answer_coords), len(r_data))):
+                    ans_val = r_data.iloc[k].get('Answer')
+                    if pd.notna(ans_val):
+                        ans_str = str(ans_val).strip()
+                        if ans_str:
+                            l, t, w, h = r3_answer_coords[k]
+                            tbox = slide.shapes.add_textbox(l, t, w, h)
+                            tf = tbox.text_frame
+                            tf.word_wrap = False
+                            tf.vertical_anchor = MSO_ANCHOR.MIDDLE
+                            tf.margin_left = tf.margin_right = tf.margin_top = tf.margin_bottom = 0
+                            p = tf.paragraphs[0]
+                            p.text = ans_str
+                            p.alignment = PP_ALIGN.LEFT
+                            if len(p.runs) > 0:
+                                run = p.runs[0]
+                                run.font.name = "Gladiola"
+                                font_sz = 13
+                                if len(ans_str) > 36:
+                                    font_sz = 10
+                                elif len(ans_str) > 28:
+                                    font_sz = 11.5
+                                run.font.size = Pt(font_sz)
+                                run.font.bold = True
+                                run.font.color.rgb = RGBColor(255, 255, 255)
 
                 # --- AUDIO ENGINE (SHARED BY BOTH MODES) ---
                 a_base = str(row['Question'])
