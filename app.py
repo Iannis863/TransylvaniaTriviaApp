@@ -353,8 +353,13 @@ def generate_trivia_slides(df):
 
             r3_q_img = None
             if r == 2:
-                q_bg = os.path.join("images", "Slides", "Round 2", "Question.jpeg")
-                add_bg(slide, q_bg if os.path.exists(q_bg) else None)
+                candidates_r2 = [
+                    os.path.join("images", "Slides", "Round 2", "Question", f"Question {i}.jpeg"),
+                    os.path.join("images", "Slides", "Round 2", "Question", f"Question {i}.jpg"),
+                    os.path.join("images", "Slides", "Round 2", "Question.jpeg")
+                ]
+                q_bg = next((c for c in candidates_r2 if os.path.exists(c)), None)
+                add_bg(slide, q_bg)
             elif r == 3:
                 for candidate in [
                     os.path.join("images", "Slides", "Round 3", "Questions", f"{i}.jpeg"),
@@ -365,18 +370,31 @@ def generate_trivia_slides(df):
                         break
                 add_bg(slide, r3_q_img if r3_q_img else None)
             elif r in [1, 4, 5]:
-                bg_name = "Question and Picture.jpeg" if has_pic else "Question.jpeg"
-                r145_bg = os.path.join("images", "Slides", "Round 1, 4, 5", bg_name)
-                add_bg(slide, r145_bg if os.path.exists(r145_bg) else None)
+                r145_dirs = [
+                    os.path.join("images", "Slides", "Round 1, 4, 5"),
+                    os.path.join("images", "Slides", "Round 1,4,5")
+                ]
+                r145_dir = next((d for d in r145_dirs if os.path.exists(d)), r145_dirs[0])
+                if has_pic:
+                    candidates_r145 = [
+                        os.path.join(r145_dir, "Question and Picture", f"Question and Picture {i}.jpeg"),
+                        os.path.join(r145_dir, "Question and Picture", f"Question and Picture {i}.jpg"),
+                        os.path.join(r145_dir, "Question and Picture", f"{i}.jpeg"),
+                        os.path.join(r145_dir, "Question and Picture", f"{i}.jpg"),
+                        os.path.join(r145_dir, "Question and Picture.jpeg")
+                    ]
+                else:
+                    candidates_r145 = [
+                        os.path.join(r145_dir, "Question", f"Question {i}.jpeg"),
+                        os.path.join(r145_dir, "Question", f"Question {i}.jpg"),
+                        os.path.join(r145_dir, "Question", f"{i}.jpeg"),
+                        os.path.join(r145_dir, "Question", f"{i}.jpg"),
+                        os.path.join(r145_dir, "Question.jpeg")
+                    ]
+                r145_bg = next((c for c in candidates_r145 if os.path.exists(c)), None)
+                add_bg(slide, r145_bg)
             else:
                 add_bg(slide)
-
-            if not (r == 3 and r3_q_img):
-                add_styled_text(slide, row['Round_Name'] if r == 2 else base_name, Inches(0.5), Inches(0.2), Inches(5),
-                                Inches(0.8), font_size=44, alignment=PP_ALIGN.LEFT, font_name="Gladiola",
-                                color_rgb=(255, 215, 0))
-                add_styled_text(slide, f"Întrebarea {i}", Inches(7.8), Inches(0.2), Inches(5), Inches(0.8), font_size=44,
-                                alignment=PP_ALIGN.RIGHT, font_name="Gladiola", color_rgb=(255, 215, 0))
 
             # AUDIO LOGIC (Always runs for Round 3)
             if r == 3:
@@ -479,27 +497,45 @@ def generate_trivia_slides(df):
                             break
 
             if r == 2:
-                ans_bg = os.path.join("images", "Slides", "Round 2", "Answer.jpeg")
-                if not os.path.exists(ans_bg):
-                    ans_bg = os.path.join("images", "Slides", "Round 2", "Answers.jpeg")
-                add_bg(slide, ans_bg if os.path.exists(ans_bg) else None)
+                candidates_r2 = [
+                    os.path.join("images", "Slides", "Round 2", "Answer", f"Answer {i}.jpeg"),
+                    os.path.join("images", "Slides", "Round 2", "Answer", f"Answer {i}.jpg"),
+                    os.path.join("images", "Slides", "Round 2", "Answer.jpeg"),
+                    os.path.join("images", "Slides", "Round 2", "Answers.jpeg")
+                ]
+                ans_bg = next((c for c in candidates_r2 if os.path.exists(c)), None)
+                add_bg(slide, ans_bg)
             elif r == 3:
                 r3_ans_bg = os.path.join("images", "Slides", "Round 3", "Answers", f"{i}.jpeg")
                 if not os.path.exists(r3_ans_bg):
                     r3_ans_bg = os.path.join("images", "Slides", "Round 3", f"{i}.jpeg")
                 add_bg(slide, r3_ans_bg if os.path.exists(r3_ans_bg) else None)
             elif r in [1, 4, 5]:
-                bg_name = "Answer and Picture.jpeg" if has_pic else "Answer.jpeg"
-                r145_bg = os.path.join("images", "Slides", "Round 1, 4, 5", bg_name)
-                add_bg(slide, r145_bg if os.path.exists(r145_bg) else None)
+                r145_dirs = [
+                    os.path.join("images", "Slides", "Round 1, 4, 5"),
+                    os.path.join("images", "Slides", "Round 1,4,5")
+                ]
+                r145_dir = next((d for d in r145_dirs if os.path.exists(d)), r145_dirs[0])
+                if has_pic:
+                    candidates_r145 = [
+                        os.path.join(r145_dir, "Answer and Picture", f"Answer and Picture {i}.jpeg"),
+                        os.path.join(r145_dir, "Answer and Picture", f"Answer and Picture {i}.jpg"),
+                        os.path.join(r145_dir, "Answer and Picture", f"{i}.jpeg"),
+                        os.path.join(r145_dir, "Answer and Picture", f"{i}.jpg"),
+                        os.path.join(r145_dir, "Answer and Picture.jpeg")
+                    ]
+                else:
+                    candidates_r145 = [
+                        os.path.join(r145_dir, "Answer", f"Answer {i}.jpeg"),
+                        os.path.join(r145_dir, "Answer", f"Answer {i}.jpg"),
+                        os.path.join(r145_dir, "Answer", f"{i}.jpeg"),
+                        os.path.join(r145_dir, "Answer", f"{i}.jpg"),
+                        os.path.join(r145_dir, "Answer.jpeg")
+                    ]
+                r145_bg = next((c for c in candidates_r145 if os.path.exists(c)), None)
+                add_bg(slide, r145_bg)
             else:
                 add_bg(slide)
-
-            add_styled_text(slide, row['Round_Name'] if r == 2 else base_name, Inches(0.5), Inches(0.2), Inches(5),
-                            Inches(0.8), font_size=44, alignment=PP_ALIGN.LEFT, font_name="Gladiola",
-                            color_rgb=(255, 215, 0))
-            add_styled_text(slide, f"Răspuns {i}", Inches(7.8), Inches(0.2), Inches(5), Inches(0.8), font_size=44,
-                            alignment=PP_ALIGN.RIGHT, font_name="Gladiola", color_rgb=(255, 215, 0))
 
             # ANSWER SLIDE LAYOUT LOGIC
             # --- ADAPTIVE ROUND 3 ANSWER LAYOUT ---
