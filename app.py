@@ -353,6 +353,9 @@ def generate_trivia_slides(df):
                             path = base + ext
                             break
 
+            q_val = str(row.get('Question', '')) if pd.notna(row.get('Question')) else ""
+            has_q = bool(q_val.strip()) and q_val.strip().lower() not in ['nan', 'none']
+
             r3_q_img = None
             if r == 2:
                 candidates_r2 = [
@@ -377,7 +380,16 @@ def generate_trivia_slides(df):
                     os.path.join("images", "Slides", "Round 1,4,5")
                 ]
                 r145_dir = next((d for d in r145_dirs if os.path.exists(d)), r145_dirs[0])
-                if has_pic:
+                if has_pic and not has_q:
+                    candidates_r145 = [
+                        os.path.join(r145_dir, "Picture Question", "Picture Question.jpeg"),
+                        os.path.join(r145_dir, "Picture Question", "Picture Question.jpg"),
+                        os.path.join(r145_dir, "Picture Question", "Picture Question.png"),
+                        os.path.join(r145_dir, "Picture Question", f"Picture Question {i}.jpeg"),
+                        os.path.join(r145_dir, "Picture Question", f"Picture Question {i}.jpg"),
+                        os.path.join(r145_dir, "Picture Question.jpeg")
+                    ]
+                elif has_pic:
                     candidates_r145 = [
                         os.path.join(r145_dir, "Question and Picture", f"Question and Picture {i}.jpeg"),
                         os.path.join(r145_dir, "Question and Picture", f"Question and Picture {i}.jpg"),
@@ -460,16 +472,19 @@ def generate_trivia_slides(df):
 
             else:
                 # Standard Logic for R1, R4, R5 Question Slides
-                if has_pic:
+                if has_pic and not has_q:
+                    place_smart_scaled_image(slide, path, prs.slide_width / 2, prs.slide_height / 2,
+                                             max_w=Inches(9.0), max_h=Inches(5.5))
+                elif has_pic:
                     # Shape: Question and Picture
                     add_styled_text(slide, row['Question'], Pt(67.71), Pt(101.14), Pt(436.29), Pt(272.57),
-                                    bold=True, is_qa=True, font_name="Gladiola", force_single_line=False)
+                                    bold=True, is_qa=True, font_name="Gladiola", color_rgb=(0, 0, 0), force_single_line=False)
                     place_smart_scaled_image(slide, path, Inches(10), Pt(101.14 + 272.57 / 2),
                                              max_w=Inches(5.0), max_h=Pt(272.57))
                 else:
                     # Shape: Question
                     add_styled_text(slide, row['Question'], Pt(390), Pt(64.29), Pt(492), Pt(324),
-                                    bold=True, is_qa=True, font_name="Gladiola", force_single_line=False)
+                                    bold=True, is_qa=True, font_name="Gladiola", color_rgb=(0, 0, 0), force_single_line=False)
 
         ans_img_base = os.path.join("images", "Slides", "Round Slides", f"Round {r} Answers")
         ans_img = next((ans_img_base + ext for ext in ['.jpeg', '.jpg', '.png', '.webp', '.avif'] if os.path.exists(ans_img_base + ext)), None)
@@ -499,6 +514,9 @@ def generate_trivia_slides(df):
                             path = base + ext
                             break
 
+            q_val = str(row.get('Question', '')) if pd.notna(row.get('Question')) else ""
+            has_q = bool(q_val.strip()) and q_val.strip().lower() not in ['nan', 'none']
+
             if r == 2:
                 candidates_r2 = [
                     os.path.join("images", "Slides", "Round 2", "Answer", f"Answer {i}.jpeg"),
@@ -525,7 +543,24 @@ def generate_trivia_slides(df):
                     os.path.join("images", "Slides", "Round 1,4,5")
                 ]
                 r145_dir = next((d for d in r145_dirs if os.path.exists(d)), r145_dirs[0])
-                if has_pic:
+                if has_pic and not has_q:
+                    pic_ans_dir = os.path.join(r145_dir, "Picture Answer")
+                    candidates_r145 = [
+                        os.path.join(pic_ans_dir, f"Picture Answer {i}.jpeg"),
+                        os.path.join(pic_ans_dir, f"Picture Answer {i}.jpg"),
+                        os.path.join(pic_ans_dir, f"Picture Answer {i}.png"),
+                        os.path.join(pic_ans_dir, f"{i}.jpeg"),
+                        os.path.join(pic_ans_dir, f"{i}.jpg"),
+                    ]
+                    r145_bg = next((c for c in candidates_r145 if os.path.exists(c)), None)
+                    if not r145_bg and os.path.isdir(pic_ans_dir):
+                        files = sorted(
+                            [f for f in os.listdir(pic_ans_dir) if f.lower().endswith(('.jpeg', '.jpg', '.png', '.webp', '.avif'))],
+                            key=lambda x: int(''.join(filter(str.isdigit, x))) if any(c.isdigit() for c in x) else x
+                        )
+                        if 0 <= i - 1 < len(files):
+                            r145_bg = os.path.join(pic_ans_dir, files[i - 1])
+                elif has_pic:
                     candidates_r145 = [
                         os.path.join(r145_dir, "Answer and Picture", f"Answer and Picture {i}.jpeg"),
                         os.path.join(r145_dir, "Answer and Picture", f"Answer and Picture {i}.jpg"),
@@ -533,6 +568,7 @@ def generate_trivia_slides(df):
                         os.path.join(r145_dir, "Answer and Picture", f"{i}.jpg"),
                         os.path.join(r145_dir, "Answer and Picture.jpeg")
                     ]
+                    r145_bg = next((c for c in candidates_r145 if os.path.exists(c)), None)
                 else:
                     candidates_r145 = [
                         os.path.join(r145_dir, "Answer", f"Answer {i}.jpeg"),
@@ -541,7 +577,7 @@ def generate_trivia_slides(df):
                         os.path.join(r145_dir, "Answer", f"{i}.jpg"),
                         os.path.join(r145_dir, "Answer.jpeg")
                     ]
-                r145_bg = next((c for c in candidates_r145 if os.path.exists(c)), None)
+                    r145_bg = next((c for c in candidates_r145 if os.path.exists(c)), None)
                 add_bg(slide, r145_bg)
             else:
                 add_bg(slide)
@@ -643,18 +679,25 @@ def generate_trivia_slides(df):
                                                  prs.slide_height / 2 - Inches(0.5), max_w=Inches(6.0), max_h=Inches(4.5))
 
                 add_styled_text(slide, str(row['Answer']), 0, Inches(6.2), prs.slide_width, Inches(1.0),
-                                font_size=54, bold=True, font_name="Gladiola", force_single_line=False)
+                                font_size=54, bold=True, font_name="Gladiola", color_rgb=(0, 0, 0), force_single_line=False)
 
             else:
                 # Standard Logic for R1, R4, R5 Answer Slides
-                if has_pic:
+                if has_pic and not has_q:
+                    # Like in the slides with question and picture, but answer goes in the question box
+                    ans_text = str(row['Answer'])
+                    add_styled_text(slide, ans_text, Pt(67.71), Pt(101.14), Pt(436.29), Pt(272.57),
+                                    bold=True, is_qa=True, font_name="Gladiola", color_rgb=(0, 0, 0), force_single_line=False)
+                    place_smart_scaled_image(slide, path, Inches(10), Pt(101.14 + 272.57 / 2),
+                                             max_w=Inches(5.0), max_h=Pt(272.57))
+                elif has_pic:
                     # Shape: Answer and Picture Question & Answer and Picture Answer
                     ans_text = str(row['Answer'])
                     ans_font_size = 32 if len(ans_text) > 40 else (38 if len(ans_text) > 28 else 44)
                     add_styled_text(slide, row['Question'], Pt(72.86), Pt(76.29), Pt(431.14), Pt(204.51),
-                                    is_qa=True, font_name="Gladiola", force_single_line=False)
+                                    is_qa=True, font_name="Gladiola", color_rgb=(0, 0, 0), force_single_line=False)
                     add_styled_text(slide, ans_text, Pt(72.86), Pt(330), Pt(418.89), Pt(73.71),
-                                    font_size=ans_font_size, bold=True, is_qa=True, font_name="Gladiola", force_single_line=False)
+                                    font_size=ans_font_size, bold=True, is_qa=True, font_name="Gladiola", color_rgb=(0, 0, 0), force_single_line=False)
                     place_smart_scaled_image(slide, path, Inches(10), Pt(76.29 + (403.71 - 76.29) / 2),
                                              max_w=Inches(5.0), max_h=Pt(403.71 - 76.29))
                 else:
@@ -662,9 +705,9 @@ def generate_trivia_slides(df):
                     ans_text = str(row['Answer'])
                     ans_font_size = 32 if len(ans_text) > 40 else (38 if len(ans_text) > 28 else 44)
                     add_styled_text(slide, row['Question'], Pt(396), Pt(69.43), Pt(483.43), Pt(200.57),
-                                    is_qa=True, font_name="Gladiola", force_single_line=False)
+                                    is_qa=True, font_name="Gladiola", color_rgb=(0, 0, 0), force_single_line=False)
                     add_styled_text(slide, ans_text, Pt(402.86), Pt(330.86), Pt(468), Pt(93.94),
-                                    font_size=ans_font_size, bold=True, is_qa=True, font_name="Gladiola", force_single_line=False)
+                                    font_size=ans_font_size, bold=True, is_qa=True, font_name="Gladiola", color_rgb=(0, 0, 0), force_single_line=False)
 
         if r in [3, 5]:
             break_filename = "15 Min Break Slide.jpeg" if r == 3 else "10 Min Break Slide.jpeg"
