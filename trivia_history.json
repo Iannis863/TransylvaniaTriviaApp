@@ -1,0 +1,578 @@
+[
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Care este capitala Australiei, o destinație frecvent confundată cu Sydney sau Melbourne?",
+    "answer": "Canberra",
+    "status": "discarded",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "În ce an a căzut Zidul Berlinului, marcând sfârșitul simbolicului Război Rece în Europa?",
+    "answer": "1989",
+    "status": "discarded",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Cine a pictat celebra frescă 'Tavanul Capelei Sixtine', finalizată în 1512?",
+    "answer": "Michelangelo",
+    "status": "discarded",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Care este cel mai adânc lac din lume, situat în Siberia, Rusia?",
+    "answer": "Lacul Baikal",
+    "status": "discarded",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Ce element chimic are simbolul 'Au' și denumirea latină 'aurum'?",
+    "answer": "Aur",
+    "status": "discarded",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Care este cel mai mare ocean de pe Pământ ca suprafață și adâncime?",
+    "answer": "Oceanul Pacific",
+    "status": "discarded",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Care este cel mai lung fluviu din lume, măsurat de la izvor până la vărsare?",
+    "answer": "Nilul (sau Amazonul, conform unor studii recente)",
+    "status": "discarded",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Cine a formulat teoria relativității restrânse și generalizate în fizică?",
+    "answer": "Albert Einstein",
+    "status": "discarded",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Cine a scris celebrul roman polițist și de aventură 'Contele de Monte Cristo'?",
+    "answer": "Alexandre Dumas",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "În ce țară s-a născut compozitorul clasic Wolfgang Amadeus Mozart?",
+    "answer": "Austria (Salzburg)",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Care este cel mai înalt vârf muntos din Munții Carpați?",
+    "answer": "Vârful Gerlachovský (în Slovacia; în România este Vârful Moldoveanu)",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Ce civilizație antică a construit celebra structură Machu Picchu din Anzii Peruani?",
+    "answer": "Civilizația Inca",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Care este planeta din sistemul nostru solar cunoscută drept 'Planeta Roșie'?",
+    "answer": "Marte",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Cine a sculptat celebra statuie a lui David, expusă la Florența?",
+    "answer": "Michelangelo",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Care este cel mai mic stat independent din lume ca suprafață și populație?",
+    "answer": "Vatican",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "În ce județ actual din România se află rezervația naturală 'Vulcanii Noroioși de la Pâclele Mari'?",
+    "answer": "Buzău",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Cum se numește spectaculosul tunel rutier de pe Transfăgărășan (DN7C), care este cel mai lung tunel rutier din România?",
+    "answer": "Tunelul Capra - Bâlea Lac (sau Tunelul Bâlea)",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Care este denumirea științifică a arborelui secular cunoscut popular ca 'Tisa' sau 'Taxus baccata', specie ocrotită prezentă în Rezervația Naturală Piatra Craiului și în Munții Apuseni?",
+    "answer": "Taxus baccata",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 2,
+    "round_name": "Ce/Cine se află în această poză?",
+    "question": "Poza",
+    "answer": "Castelul Bran (Castelul lui Dracula)",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 2,
+    "round_name": "Ce/Cine se află în această poză?",
+    "question": "Poza",
+    "answer": "Mona Lisa (Leonardo da Vinci)",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 2,
+    "round_name": "Ce/Cine se află în această poză?",
+    "question": "Poza",
+    "answer": "Turnul Eiffel (Paris)",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 2,
+    "round_name": "Ce/Cine se află în această poză?",
+    "question": "Poza",
+    "answer": "Sfinxul din Bucegi",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 2,
+    "round_name": "Ce/Cine se află în această poză?",
+    "question": "Poza",
+    "answer": "Colosseumul din Roma",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 2,
+    "round_name": "Ce/Cine se află în această poză?",
+    "question": "Poza",
+    "answer": "Statuia Libertății (New York)",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 2,
+    "round_name": "Ce/Cine se află în această poză?",
+    "question": "Poza",
+    "answer": "Cascada Niagara",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 2,
+    "round_name": "Ce/Cine se află în această poză?",
+    "question": "Poza",
+    "answer": "Marele Zid Chinezesc",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 2,
+    "round_name": "Ce/Cine se află în această poză?",
+    "question": "Poza",
+    "answer": "Taj Mahal (India)",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 2,
+    "round_name": "Ce/Cine se află în această poză?",
+    "question": "Poza",
+    "answer": "Atena - Partenonul",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 6,
+    "round_name": "Pariul",
+    "question": "Care este cel mai uscat continent de pe Pământ (unde precipitațiile anuale sunt cele mai scăzute)?\nA) Africa\nB) Australia\nC) Antarctica\nD) Asia",
+    "answer": "C) Antarctica (Este cel mai mare deșert rece din lume, cu precipitații extrem de reduse)",
+    "status": "accepted",
+    "timestamp": "2026-10-05T19:05:51.701027"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Care este cea mai adâncă fosă oceanică din lume?",
+    "answer": "Groapa Marianelor (Fosa Marianelor)",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Cine a compus opera 'Nunta lui Figaro'?",
+    "answer": "Wolfgang Amadeus Mozart",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Ce civilizație precolumbiană a construit faimosul oraș Machu Picchu în munții Anzi?",
+    "answer": "Civilizația Incașă (Incașii)",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Ce sculptor român a realizat 'Poarta Sărutului' și 'Coloana Infinitului' la Târgu Jiu?",
+    "answer": "Constantin Brâncuși",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Care este cea mai mare insulă ca suprafață din Marea Mediterană?",
+    "answer": "Sicilia",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Inel / Ring",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Șah / Chess",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Muntele Everest / Himalaya",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Măr / Apple",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Ceas / Timp",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Pod / Bridge",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Pian / Claviatură",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Avram Iancu",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Castele din Transilvania",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Mercur",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Pălincă",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Dacia",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Vlad Țepeș / Dracula",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Salina Turda",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Smarald",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 6,
+    "round_name": "Pariul",
+    "question": "Care este cel mai mare deșert ca suprafață de pe planeta Pământ?\nA) Deșertul Sahara\nB) Deșertul Gobi\nC) Deșertul Antarctic\nD) Deșertul Arabiei",
+    "answer": "C) Deșertul Antarctic (este un deșert polar cu precipitații extrem de scăzute și o suprafață de circa 14 milioane km², depășind Sahara de 9 milioane km²).",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 6,
+    "round_name": "Pariul",
+    "question": "Câte inimi are o caracatiță?\nA) 1\nB) 2\nC) 3\nD) 4",
+    "answer": "C) 3 (are două inimi branhiale care pompează sângele prin branhii și o inimă sistemică centrală care distribuie sângele oxigenat în restul corpului).",
+    "status": "discarded",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Ce bătălie navală din 1571 a marcat prima înfrângere majoră a flotei Imperiului Otoman împotriva Ligii Sfinte?",
+    "answer": "Bătălia de la Lepanto",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Care este singurul element chimic al cărui nume este derivat de la o insulă din Marea Mediterană?",
+    "answer": "Cuprul",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Ce fluviu traversează cele mai multe capitale din lume?",
+    "answer": "Dunărea (Viena, Bratislava, Budapesta, Belgrad)",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Ce pictor renascentist a pictat fresca 'Școala din Atena' aflată la Vatican?",
+    "answer": "Rafael",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Care este capitala administrativă a Africii de Sud, unde își are sediul guvernul?",
+    "answer": "Pretoria",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Ce fizician danez a propus în 1913 modelul atomic cu electroni care orbitează pe niveluri energetice diferite?",
+    "answer": "Niels Bohr",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Ce gaz nobil a fost descoperit mai întâi în spectrul solar înainte de a fi găsit pe Pământ?",
+    "answer": "Heliul",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Care este singura operă scrisă de Ludwig van Beethoven?",
+    "answer": "Fidelio",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Ce strâmtoare separă continentul asiatic de cel nord-american?",
+    "answer": "Strâmtoarea Bering",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 1,
+    "round_name": "Cultură Generală",
+    "question": "Cine a formulat teoria selecției naturale în lucrarea 'Originea speciilor' din 1859?",
+    "answer": "Charles Darwin",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Cappuccino",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Luna / The Moon",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Vampir / Dracula",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Piramide",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Albine",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Cinema",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Ochelari de vedere",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Ciuperci",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Cluj-Napoca",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 2,
+    "round_name": "Ghiceste Legătura",
+    "question": "Poza",
+    "answer": "Sarmale",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  },
+  {
+    "round": 6,
+    "round_name": "Pariul",
+    "question": "Care este cel mai înalt munte de pe Pământ măsurat de la baza sa submarină până la vârf?\nA) Muntele Everest\nB) Mauna Kea\nC) K2\nD) Kilimanjaro",
+    "answer": "B) Mauna Kea (măsoară aproximativ 10.210 m de la baza oceanică, deși doar 4.207 m sunt deasupra nivelului mării; Everest are cea mai mare altitudine deasupra mării).",
+    "status": "accepted",
+    "timestamp": "2026-10-11T12:23:53.149198"
+  }
+]

@@ -104,10 +104,14 @@ def load_history(filepath: str = HISTORY_FILE) -> list:
     return []
 
 def save_history(history: list, filepath: str = HISTORY_FILE):
-    """Save updated history to trivia_history.json."""
+    """Save updated history to trivia_history.json, excluding rounds 3, 4, and 5."""
     try:
+        filtered = [
+            item for item in history
+            if item.get("round") not in {3, 4, 5, "3", "4", "5"}
+        ]
         with open(filepath, "w", encoding="utf-8") as f:
-            json.dump(history, f, ensure_ascii=False, indent=2)
+            json.dump(filtered, f, ensure_ascii=False, indent=2)
     except Exception as e:
         print(f"Error saving history file {filepath}: {e}")
 
@@ -322,6 +326,7 @@ async def run_full_generation_pipeline(
     history = load_history()
     
     # Extract thematic names
+    theme2 = next((cfg["round_name"] for cfg in round_configs if cfg["round_nr"] == 2), "Ghiceste Legătura")
     theme4 = next((cfg["round_name"] for cfg in round_configs if cfg["round_nr"] == 4), "Tematica 1")
     theme5 = next((cfg["round_name"] for cfg in round_configs if cfg["round_nr"] == 5), "Tematica 2")
 
@@ -332,10 +337,10 @@ Generează un set complet de întrebări de trivia captivante și de cultură ge
 
 ESTE ESENȚIAL: Respectă cu strictețe numărul minim de întrebări cerut pentru fiecare rundă (generează o listă completă, fără a te opri mai devreme):
 1. Runda 1: "Cultură Generală" -> EXACT 20 întrebări diverse (istorie, știință, geografie, literatură, artă).
-2. Runda 2: "Ce/Cine se află în această poză?" -> EXACT 20 elemente vizuale diferite.
+2. Runda 2: "{theme2}" -> EXACT 20 conexiuni/legături vizuale diferite între 3 indicii imagini (se ghicește legătura comună dintre cele 3 imagini).
    IMPORTANT PENTRU RUNDA 2:
    - Câmpul "question" TREBUIE SĂ FIE ÎNTOTDEAUNA exact cuvântul "Poza".
-   - "answer": Numele / entitatea corectă de ghicit.
+   - "answer": Numele / legătura corectă de ghicit.
    - "image_query_a": Căutare scurtă în engleză/română pentru indiciul imagine A.
    - "image_query_b": Căutare scurtă pentru indiciul imagine B.
    - "image_query_c": Căutare scurtă pentru indiciul imagine C.
@@ -382,7 +387,7 @@ FORMATUL JSON EXACT CERUT (returnează DOAR JSON valid):
     results = {}
     r_names_map = {
         1: "Cultură Generală",
-        2: "Ce/Cine se află în această poză?",
+        2: theme2,
         4: theme4,
         5: theme5,
         6: "Pariul"
@@ -473,8 +478,9 @@ async def generate_more_candidates_for_round(
         instructions = f"""Generează EXACT {oversample} întrebări NOI, diverse și captivante de Cultură Generală (istorie, știință, geografie, literatură, artă) în limba Română."""
         format_example = '[{"question": "...", "answer": "...", "image_query": "..."}]'
     elif round_nr == 2:
-        instructions = f"""Generează EXACT {oversample} elemente vizuale NOI (personalități, filme, locuri, personaje, obiecte celebre) în limba Română.
-IMPORTANT: Câmpul "question" TREBUIE SĂ FIE ÎNTOTDEAUNA exact "Poza". "answer" este entitatea de ghicit. Furnizează "image_query_a", "image_query_b" și "image_query_c"."""
+        r2_name = round_name or "Ghiceste Legătura"
+        instructions = f"""Generează EXACT {oversample} conexiuni/legături vizuale NOI ("{r2_name}") între 3 indicii imagini în limba Română.
+IMPORTANT: Câmpul "question" TREBUIE SĂ FIE ÎNTOTDEAUNA exact "Poza". "answer" este entitatea / legătura de ghicit. Furnizează "image_query_a", "image_query_b" și "image_query_c"."""
         format_example = '[{"question": "Poza", "answer": "...", "image_query_a": "...", "image_query_b": "...", "image_query_c": "..."}]'
     elif round_nr in [4, 5]:
         instructions = f"""Generează EXACT {oversample} întrebări NOI și interesante pe tema "{round_name}" în limba Română."""
@@ -672,8 +678,10 @@ def confirm_and_finalize(
     history = load_history(history_file)
     now_str = datetime.now().isoformat()
     
-    # 1. Record discarded items
+    # 1. Record discarded items (excluding rounds 3, 4, 5)
     for r_nr, cands in unselected_by_round.items():
+        if r_nr in {3, 4, 5, "3", "4", "5"}:
+            continue
         for cand in cands:
             history.append({
                 "round": r_nr,
@@ -706,14 +714,15 @@ def confirm_and_finalize(
         os.makedirs(target_img_dir, exist_ok=True)
         
         for idx, cand in enumerate(cands, 1):
-            history.append({
-                "round": r_nr,
-                "round_name": r_name,
-                "question": cand.get("question"),
-                "answer": cand.get("answer"),
-                "status": "accepted",
-                "timestamp": now_str
-            })
+            if r_nr not in {3, 4, 5, "3", "4", "5"}:
+                history.append({
+                    "round": r_nr,
+                    "round_name": r_name,
+                    "question": cand.get("question"),
+                    "answer": cand.get("answer"),
+                    "status": "accepted",
+                    "timestamp": now_str
+                })
             
             if r_nr == 2:
                 # Move triplet of images: {idx}A, {idx}B, and {idx}C
@@ -737,7 +746,7 @@ def confirm_and_finalize(
                     shutil.copy2(src_c, dest_c)
                     
                 picture_col = f"{idx}B{ext_b}"
-                question_col = "Poza"
+                question_col = cand.get("question") or "Poza"
             elif r_nr == 6:
                 # Wager image
                 src = cand.get("cached_img")

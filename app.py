@@ -422,9 +422,7 @@ def generate_trivia_slides(df):
             if r == 2:
                 # 3 Images Side-by-Side (or 2 Images if C is not present)
                 img_q_val = str(row.get('Question'))
-                if not img_q_val or img_q_val.strip().lower() in ['poza', 'nan', 'none', '']:
-                    img_q_val = f"{i}A"
-                img_path_a = os.path.join("images", f"Round {r}", img_q_val)
+                img_path_a = os.path.join("images", f"Round {r}", f"{i}A")
                 img_path_b = path if path else os.path.join("images", f"Round {r}", f"{i}B")
                 img_path_c = os.path.join("images", f"Round {r}", f"{i}C")
 
@@ -466,8 +464,8 @@ def generate_trivia_slides(df):
                     # Shape: Question and Picture
                     add_styled_text(slide, row['Question'], Pt(67.71), Pt(101.14), Pt(436.29), Pt(272.57),
                                     bold=True, is_qa=True, font_name="Gladiola", force_single_line=False)
-                    place_smart_scaled_image(slide, path, Inches(10), prs.slide_height / 2 + Inches(0.5),
-                                             max_w=Inches(5.0), max_h=Inches(4.5))
+                    place_smart_scaled_image(slide, path, Inches(10), Pt(101.14 + 272.57 / 2),
+                                             max_w=Inches(5.0), max_h=Pt(272.57))
                 else:
                     # Shape: Question
                     add_styled_text(slide, row['Question'], Pt(390), Pt(64.29), Pt(492), Pt(324),
@@ -626,9 +624,7 @@ def generate_trivia_slides(df):
             elif r == 2:
                 # 3 Images Side-by-Side + Text at Bottom (or 2 Images if C is not present)
                 img_q_val = str(row.get('Question'))
-                if not img_q_val or img_q_val.strip().lower() in ['poza', 'nan', 'none', '']:
-                    img_q_val = f"{i}A"
-                img_path_a = os.path.join("images", f"Round {r}", img_q_val)
+                img_path_a = os.path.join("images", f"Round {r}", f"{i}A")
                 img_path_b = path if path else os.path.join("images", f"Round {r}", f"{i}B")
                 img_path_c = os.path.join("images", f"Round {r}", f"{i}C")
 
@@ -646,24 +642,24 @@ def generate_trivia_slides(df):
                         place_smart_scaled_image(slide, img_path_b, prs.slide_width * 0.75,
                                                  prs.slide_height / 2 - Inches(0.5), max_w=Inches(6.0), max_h=Inches(4.5))
 
-                add_styled_text(slide, f"Răspuns: {row['Answer']}", 0, Inches(6.2), prs.slide_width, Inches(1.0),
+                add_styled_text(slide, str(row['Answer']), 0, Inches(6.2), prs.slide_width, Inches(1.0),
                                 font_size=54, bold=True, font_name="Gladiola", force_single_line=False)
 
             else:
                 # Standard Logic for R1, R4, R5 Answer Slides
                 if has_pic:
                     # Shape: Answer and Picture Question & Answer and Picture Answer
-                    ans_text = f"Răspuns: {row['Answer']}"
+                    ans_text = str(row['Answer'])
                     ans_font_size = 32 if len(ans_text) > 40 else (38 if len(ans_text) > 28 else 44)
                     add_styled_text(slide, row['Question'], Pt(72.86), Pt(76.29), Pt(431.14), Pt(204.51),
                                     is_qa=True, font_name="Gladiola", force_single_line=False)
                     add_styled_text(slide, ans_text, Pt(72.86), Pt(330), Pt(418.89), Pt(73.71),
                                     font_size=ans_font_size, bold=True, is_qa=True, font_name="Gladiola", force_single_line=False)
-                    place_smart_scaled_image(slide, path, Inches(10), prs.slide_height / 2 + Inches(0.5),
-                                             max_w=Inches(5.0), max_h=Inches(4.5))
+                    place_smart_scaled_image(slide, path, Inches(10), Pt(76.29 + (403.71 - 76.29) / 2),
+                                             max_w=Inches(5.0), max_h=Pt(403.71 - 76.29))
                 else:
                     # Shape: Answer Question & Answer Answer
-                    ans_text = f"Răspuns: {row['Answer']}"
+                    ans_text = str(row['Answer'])
                     ans_font_size = 32 if len(ans_text) > 40 else (38 if len(ans_text) > 28 else 44)
                     add_styled_text(slide, row['Question'], Pt(396), Pt(69.43), Pt(483.43), Pt(200.57),
                                     is_qa=True, font_name="Gladiola", force_single_line=False)
@@ -757,7 +753,7 @@ def generate_trivia_slides(df):
         else:
             add_styled_text(sa, "Pariul: Răspuns", Inches(0.5), Inches(0.2), Inches(5), Inches(0.8), font_size=44,
                             alignment=PP_ALIGN.LEFT, font_name="Gladiola", color_rgb=(255, 215, 0))
-            add_styled_text(sa, f"Răspuns: {p_row['Answer']}", Inches(1.0), Inches(1.5), Inches(11.3), Inches(5.0),
+            add_styled_text(sa, str(p_row['Answer']), Inches(1.0), Inches(1.5), Inches(11.3), Inches(5.0),
                             font_size=54, bold=True, is_qa=True, font_name="Gladiola", force_single_line=False)
 
         last_img = os.path.join("images", "Slides", "Generic Slides", "Last Slide.jpeg")
@@ -794,7 +790,7 @@ def render_agent_studio_tab():
             else:
                 round_configs = [
                     {"round_nr": 1, "round_name": "Cultură Generală", "count": 15},
-                    {"round_nr": 2, "round_name": "Ce/Cine se află în această poză?", "count": 15},
+                    {"round_nr": 2, "round_name": "Ghiceste Legătura", "count": 15},
                     {"round_nr": 4, "round_name": theme_r4 if theme_r4 else "Runda Tematică 1", "count": 15},
                     {"round_nr": 5, "round_name": theme_r5 if theme_r5 else "Runda Tematică 2", "count": 15},
                     {"round_nr": 6, "round_name": "Pariul", "count": 5},
@@ -849,7 +845,7 @@ def render_agent_studio_tab():
         active_rounds = [1, 2, 3, 4, 5, 6]
         tab_titles = [
             f"Runda 1: Cultură Generală ({sum(sel_indices.get(1, []))}/10)",
-            f"Runda 2: Poză ({sum(sel_indices.get(2, []))}/10)",
+            f"Runda 2: Ghiceste Legătura ({sum(sel_indices.get(2, []))}/10)",
             f"Runda 3: Melodie ({sum(sel_indices.get(3, []))}/10)",
             f"Runda 4 ({sum(sel_indices.get(4, []))}/10)",
             f"Runda 5 ({sum(sel_indices.get(5, []))}/10)",
@@ -887,11 +883,28 @@ def render_agent_studio_tab():
                     
                     col_info, col_img = st.columns([1, 1] if r_nr == 2 else [3, 2])
                     with col_info:
-                        if r_nr == 2:
-                            st.write(f"**Întrebare:** `Poza`")
+                        q_curr = cand.get("question", "Poza" if r_nr == 2 else "")
+                        if r_nr == 6 or "\n" in str(q_curr):
+                            q_val = st.text_area(
+                                "Întrebare:",
+                                value=q_curr,
+                                key=f"txt_q_{r_nr}_{c_idx}",
+                                height=100
+                            )
                         else:
-                            st.write(f"**Întrebare:** {cand.get('question')}")
-                        st.write(f"**Răspuns:** {cand.get('answer')}")
+                            q_val = st.text_input(
+                                "Întrebare:",
+                                value=q_curr,
+                                key=f"txt_q_{r_nr}_{c_idx}"
+                            )
+                        cand["question"] = q_val
+
+                        a_val = st.text_input(
+                            "Răspuns:",
+                            value=cand.get("answer", ""),
+                            key=f"txt_a_{r_nr}_{c_idx}"
+                        )
+                        cand["answer"] = a_val
                         if r_nr == 2:
                             c_qa, c_qb, c_qc = st.columns(3)
                             with c_qa:
